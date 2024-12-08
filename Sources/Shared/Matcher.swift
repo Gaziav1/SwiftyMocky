@@ -3,7 +3,7 @@ import Foundation
 /// Matcher is container class, responsible for storing and resolving comparators for given types.
 public class Matcher {
     /// Shared **Matcher** instance
-    public static var `default` = Matcher()
+    nonisolated public static var `default` = Matcher()
     /// [Internal] Matchers storage
     private var matchers: [(Mirror,Any)] = []
     /// [Internal] file where comparison faiure should be recorded
