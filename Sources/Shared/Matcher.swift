@@ -3,7 +3,7 @@ import Foundation
 /// Matcher is container class, responsible for storing and resolving comparators for given types.
 public class Matcher {
     /// Shared **Matcher** instance
-    nonisolated public static var `default` = Matcher()
+    nonisolated(unsafe) public static let `default` = Matcher()
     /// [Internal] Matchers storage
     private var matchers: [(Mirror,Any)] = []
     /// [Internal] file where comparison faiure should be recorded
@@ -53,7 +53,6 @@ public class Matcher {
     /// Called automatically in every Matcher init.
     ///
     internal func registerBasicTypes() {
-#if swift(>=4.1)
         register([Bool].self)
         register([String].self)
         register([Float].self)
@@ -120,40 +119,6 @@ public class Matcher {
         register(UInt32?.self)
         register(UInt64?.self)
         register(Data?.self)
-#else
-        register([Bool].self) { (a: Bool, b: Bool) in return a == b }
-        register([String].self) { (a: String, b: String) in return a == b }
-        register([Float].self)  { (a: Float, b: Float) in return a == b }
-        register([Double].self)  { (a: Double, b: Double) in return a == b }
-        register([Character].self) { (a: Character, b: Character) in return a == b }
-        register([Int].self) { (a: Int, b: Int) in return a == b }
-        register([Int8].self) { (a: Int8, b: Int8) in return a == b }
-        register([Int16].self) { (a: Int16, b: Int16) in return a == b }
-        register([Int32].self)  { (a: Int32, b: Int32) in return a == b }
-        register([Int64].self) { (a: Int64, b: Int64) in return a == b }
-        register([UInt].self) { (a: UInt, b: UInt) in return a == b }
-        register([UInt8].self) { (a: UInt8, b: UInt8) in return a == b }
-        register([UInt16].self) { (a: UInt16, b: UInt16) in return a == b }
-        register([UInt32].self) { (a: UInt32, b: UInt32) in return a == b }
-        register([UInt64].self) { (a: UInt64, b: UInt64) in return a == b }
-        register([Data].self) { (a: Data, b: Data) in return a == b }
-        register([Bool?].self) { (a: Bool?, b: Bool?) in return a == b }
-        register([String?].self) { (a: String?, b: String?) in return a == b }
-        register([Float?].self) { (a: Float?, b: Float?) in return a == b }
-        register([Double?].self) { (a: Double?, b: Double?) in return a == b }
-        register([Character?].self) { (a: Character?, b: Character?) in return a == b }
-        register([Int?].self) { (a: Int?, b: Int?) in return a == b }
-        register([Int8?].self) { (a: Int8?, b: Int8?) in return a == b }
-        register([Int16?].self) { (a: Int16?, b: Int16?) in return a == b }
-        register([Int32?].self) { (a: Int32?, b: Int32?) in return a == b }
-        register([Int64?].self) { (a: Int64?, b: Int64?) in return a == b }
-        register([UInt?].self) { (a: UInt?, b: UInt?) in return a == b }
-        register([UInt8?].self) { (a: UInt8?, b: UInt8?) in return a == b }
-        register([UInt16?].self) { (a: UInt16?, b: UInt16?) in return a == b }
-        register([UInt32?].self) { (a: UInt32?, b: UInt32?) in return a == b }
-        register([UInt64?].self) { (a: UInt64?, b: UInt64?) in return a == b }
-        register([Data?].self) { (a: Data?, b: Data?) in return a == b }
-#endif
 
         // Types
         register(Any.Type.self) { _, _ in return true }
